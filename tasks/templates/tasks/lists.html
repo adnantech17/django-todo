@@ -7,27 +7,61 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        .center-column {
+            width: 95%;
+            padding: 1em;
+            box-shadow: 0px -1px 10px -4px;
+            background-color: #aaaaaa;
+            margin: auto;
+        }
+
+        .form-column {
+            width: 65%;
+            padding: 1em;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            height: 2em;
+            padding: 1.5em;
+            margin: .1em;
+        }
+
+        .tasks {
+            width: 95%;
+            padding: 1em;
+            background-color: rgb(169, 224, 255);
+            box-shadow: 0px -1px 10px -4px;
+            margin: 20px auto;
+            border-radius: 4px;
+        }
+    </style>
+
 </head>
 
 <body>
-    <form method="POST" action="/">
-        {% csrf_token %}
-        {{form.title}}
-        <input type="submit" name="Create Task">
-    </form>
+    <div class="container center-column">
+        <form method="POST" action="/" class="form-column">
+            {% csrf_token %}
+            {{form.title}}
+            <input class="btn btn-info" type="submit" name="Create Task">
+        </form>
 
-    {% for task in tasks %}
-    <div>
-        <a href="{% url 'update' task.id %}">Update</a>
-        <a href="{% url 'delete' task.id %}">Delete</a>
-        {% if task.complete %}
-        <p><s>{{task}}</s></p>
-        {% else %}
-        <p>{{task}}</p>
-        {% endif %}
+        {% for task in tasks %}
+        <div class="tasks">
+            <a class="btn btn-small btn-info" href="{% url 'update' task.id %}">Update</a>
+            <a class="btn btn-small btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+            {% if task.complete %}
+            <s>{{task}}</s>
+            {% else %}
+            {{task}}
+            {% endif %}
 
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </body>
 
 </html>
